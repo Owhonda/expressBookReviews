@@ -45,7 +45,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
     return res.status(200).json(books[req.params.isbn]);
   }
   else{
-    return res.status(208).message("Invalid ISBN number");
+    return res.status(208).json({message:"Invalid ISBN number"});
   }
  });
   
@@ -57,10 +57,12 @@ public_users.get('/author/:author',function (req, res) {
   let matchingBooksObject = {};
   let count = 1;
 
+  //console.log(books);
   //loop through all the books to find the author
   for(let book in books){
-    if (book.author == req.params.author) {
-      matchingBooks.push(book);
+    //console.log(books[book].author);
+    if (books[book].author == req.params.author) {
+      matchingBooks.push(books[book]);
     }
   }
 
@@ -73,7 +75,7 @@ public_users.get('/author/:author',function (req, res) {
     return res.status(200).json(matchingBooksObject);
   }
   else{
-    return res.status(208).message("Author not found");
+    return res.status(208).json({message:"Author not found"});
   }
 
 });
@@ -81,13 +83,43 @@ public_users.get('/author/:author',function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+  let matchingBooks = [];
+  let matchingBooksObject = {};
+  let count = 1;
+
+  //console.log(books);
+  //loop through all the books to find the title
+  for(let book in books){
+    //console.log(books[book].title);
+    if (books[book].title == req.params.title) {
+      matchingBooks.push(books[book]);
+    }
+  }
+
+  //Create a JSON object from the array
+  if(matchingBooks.length > 0){
+    matchingBooks.forEach((bookFound) =>{
+      matchingBooksObject[count++] = bookFound;
+    });
+
+    return res.status(200).json(matchingBooksObject);
+  }
+  else{
+    return res.status(208).json({message:"Title not found"});
+  }
 });
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+  if(books[req.params.isbn]){
+    return res.status(200).json(books[req.params.isbn]["reviews"]);
+  }
+  else{
+    return res.status(208).json({message:"Invalid ISBN number"});
+  }
 });
 
 module.exports.general = public_users;
