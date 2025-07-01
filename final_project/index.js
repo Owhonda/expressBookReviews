@@ -8,10 +8,15 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
+app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: false}))
 
 app.use("/customer/auth/*", function auth(req,res,next){
-//Write the authenication mechanism here
+    //Write the authentication mechanism here
+    //Check if username and password have been set
+
+    //Authenticate username and password
+
+    //If authenticated, then create session
 });
  
 const PORT =5000;
