@@ -7,6 +7,10 @@ let users = [{username:"Octane", password : "Burning_Bright"},{username:"Susan",
 
 const isValid = (username)=>{ //returns boolean
   //write code to check is the username is valid
+  if(!username){
+    return false;
+  }
+  
   let authUser = users.filter((ptnUsr) => {
     return (ptnUsr.username == username);
   });
@@ -23,7 +27,7 @@ const authenticatedUser = (username,password)=>{ //returns boolean
   //write code to check if username and password match the one we have in records.
   if(isValid(username)){
     //Code to check if username and password combination are correct
-    
+
   }
   else{
     return false
