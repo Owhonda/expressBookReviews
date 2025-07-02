@@ -116,7 +116,8 @@ public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
   //return res.status(300).json({message: "Yet to be implemented"});
   if(books[req.params.isbn]){
-    return res.status(200).json(books[req.params.isbn]["reviews"]);
+    return res.status(200).json({"Book Title":books[req.params.isbn]["title"],
+      "Book Review": books[req.params.isbn]["reviews"]});
   }
   else{
     return res.status(208).json({message:"Invalid ISBN number"});
