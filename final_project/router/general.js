@@ -9,10 +9,11 @@ public_users.post("/register", (req,res) => {
   //Write your code here
   //return res.status(300).json({message: "Yet to be implemented"});
   //Check if params have been set
+  //console.log(req.body);
   let regParamsSet = (req.body.username && req.body.password);
 
   if(!regParamsSet){
-    return res.status(208).message("User account name and Password required");
+    return res.status(208).json({message : "User account name and Password required"});
   }
   //Set boolean for if user exists
   let userExists = isValid(req.body.username);
@@ -22,10 +23,10 @@ public_users.post("/register", (req,res) => {
     let newUser = {username: req.body.username, password: req.body.password};
     //Add user object to array
     users.push(newUser); 
-    return res.status(200).message(`User ${req.body.username} has been created!`)
+    return res.status(200).json({message :`User ${req.body.username} has been created!`});
   }
   else{
-    return res.status(208).message(`User ${req.body.username} already exists`)
+    return res.status(208).json({message :`User ${req.body.username} already exists`});
   }
 });
 
