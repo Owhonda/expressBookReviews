@@ -79,7 +79,7 @@ regd_users.post("/login", (req,res) => {
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
   if(books[req.params.isbn] && req.body.review){
-    books[req.params.isbn]["reviews"][data.usernameval] = req.body.review;
+    books[req.params.isbn]["reviews"][req.data.usernameval] = req.body.review;
     return res.json(books[req.params.isbn]["reviews"][data.usernameval]);
   }else{
     return res.status(403).json({message: "Book ISBN number NOT FOUND"});
