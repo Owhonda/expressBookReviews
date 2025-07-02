@@ -12,11 +12,24 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
     //Write the authentication mechanism here
-    //Check if username and password have been set
+    if (req.session.authorization) {
+    let keyAccessToken = req.session.authorization['keyAccess'];
 
-    //Authenticate username and password
+    //Verify JWT token
+    jwt.verify(keyAccessToken, 'bookkeycardaccess', (err, user) =>{
+      if(!err){
+        console.log(user);
+        req.user = user;
+        next();
+      }
+      else{
+        return res.status(403).json({message: "User not logged in; please log in."});
+      }
+    });
+  } else {
+    return res.status(403).json({message: "User needs to log in to access resource..."})
+  }
 
-    //If authenticated, then create session
 });
  
 const PORT =5000;
