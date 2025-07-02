@@ -3,6 +3,7 @@ let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
+const axios = require('axios');
 
 
 public_users.post("/register", (req,res) => {
@@ -124,4 +125,63 @@ public_users.get('/review/:isbn',function (req, res) {
   }
 });
 
+
+//code for getting the list of books using task 10
+let getBookList = async (url)=>{
+  
+  try{
+    //Axios code goes here
+    const bookList = await axios.get(url);
+    return bookList;
+  }
+  catch(err){
+    //Output error
+    console.log(err);
+  }
+};
+
+//code for getting the books based on isbn number task 11
+let getBookISBN = async (url)=>{
+  
+  try{
+    //Axios code goes here
+    const bookDetails = await axios.get(url);
+    return bookDetails;
+  }
+  catch(err){
+    //Output error
+    console.log(err);
+  }
+};
+//code for getting books based on author task 12
+let getBookAuthor = async (url)=>{
+  
+  try{
+    //Axios code goes here
+    const bookDetails = await axios.get(url);
+    return bookDetails;
+  }
+  catch(err){
+    //Output error
+    console.log(err);
+  }
+};
+//code for getting book details based on titles 13
+let getBookTitle = async (url)=>{
+  
+  try{
+    //Axios code goes here
+    const bookDetails = await axios.get(url);
+    return bookDetails;
+  }
+  catch(err){
+    //Output error
+    console.log(err);
+  }
+};
+
 module.exports.general = public_users;
+module.exports.getBookList;
+module.exports.getBookTitle;
+module.exports.getBookAuthor;
+module.exports.getBookISBN;
