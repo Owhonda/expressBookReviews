@@ -16,10 +16,10 @@ app.use("/customer/auth/*", function auth(req,res,next){
     let keyAccessToken = req.session.authorization['keyAccess'];
 
     //Verify JWT token
-    jwt.verify(keyAccessToken, 'bookkeycardaccess', (err, user) =>{
+    jwt.verify(keyAccessToken, 'bookkeycardaccess', (err, data) =>{
       if(!err){
-        console.log(user);
-        req.user = user;
+        console.log(data);
+        req.data = data;
         next();
       }
       else{

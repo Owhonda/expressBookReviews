@@ -55,10 +55,12 @@ regd_users.post("/login", (req,res) => {
   //Write your code here
   //return res.status(300).json({message: "Yet to be implemented"});
   let validUser = authenticatedUser(req.body.username, req.body.password);
+  const username = req.body.username;
+  const password = req.body.password;
   if (validUser) {
     //Create Session Using jwt
     let keyAccess = jwt.sign({
-      data: (username + password)
+      usernameval: username
     }, 'bookkeycardaccess', 
     {expiresIn: 60 * 60}
     );
@@ -76,8 +78,33 @@ regd_users.post("/login", (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
+  if(books[req.params.isbn] && req.body.review){
+    books[req.params.isbn]["reviews"][data.usernameval] = req.body.review;
+    return res.json(books[req.params.isbn]["reviews"][data.usernameval]);
+  }else{
+    return res.status(403).json({message: "Book ISBN number NOT FOUND"});
+  }
   //return res.status(300).json({message: "Yet to be implemented"});
 });
+
+
+// Add a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  //Write your code here
+  if(books[req.params.isbn]){
+    books[req.params.isbn]["reviews"][data.usernameval] = "";
+    return res.json({message: `Book review for ${data.usernameval} has been deleted!!`});
+  }else{
+    return res.status(403).json({message: "Book ISBN number NOT FOUND"});
+  }
+  //return res.status(300).json({message: "Yet to be implemented"});
+});
+
+
+// Code for testing middleware
+/* regd_users.get("/auth/test", (req, res) => {
+    return res.status(200).json(req.data);
+}) */
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
